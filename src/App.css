@@ -37,22 +37,31 @@
   }
 }
 body {
-  height: 700px;
+  height: 812px;
   background-color: rgb(18, 43, 125); /* For browsers that do not support gradients */
-  background-image: linear-gradient(rgb(18, 43, 125), rgb(0, 221, 245));
+  background-image: radial-gradient(rgb(18, 43, 125), rgb(0, 221, 245));
   font: white;
 }
-.welcome {
-  color: white;
+.NavBar {
   padding: 1% 2% 1%;
-  /* text-align: right; */
+}
+.Brand {
+  font-family: "Avant Garde", "Avantgarde", "Century Gothic", "CenturyGothic", "AppleGothic", sans-serif;
+  font-weight: bold;
+  
+}
+.welcome {
+  color: rgb(67, 67, 67);
+  padding: 1% 2% 1%;
 }
 .list {
   height: 400px;
 }
 .clear {
   color: rgb(0, 221, 245);
-  width: 100%;
   text-align: right;
   text-decoration: underline;
+}
+.warning {
+  margin: 12px 0px 12px 0px;
 }
