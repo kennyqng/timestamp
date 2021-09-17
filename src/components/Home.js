@@ -10,42 +10,43 @@ function Home() {
     return initialValue || [];
   });
   
+  const [elapse, setElapse] = useState ("");
+  
   useEffect(() => {
     localStorage.setItem("recent", JSON.stringify(displayTime));
+    const interval = setInterval(()=> {
+      setElapse (convertMilliseconds());
+    }, 1000);
+    return () => clearInterval(interval);
+    
   });
-  
+
   var lastRecorded = new Date(displayTime[displayTime.length-1]);
   var currentTime = new Date();
   var elapseTime =  currentTime - lastRecorded;
-
+  
   const recordTime = () => {
-    const startDate = new Date();
-    setDisplayTime(arr => [...arr, startDate.toString()]);
-    updateTime();
+    const newStamp = new Date();
+    setDisplayTime(arr => [...arr, newStamp.toString()]);
+    updateCurrentTime();
     localStorage.getItem("recent");
   };
   
-  const updateTime = () => {
+  const updateCurrentTime = () => {
     currentTime = Date.now();
   };
   
   
-  const convertMili = (t) => {
-    const days = 86400000,
-    hours = 3600000,
-    minutes = 60000,
-    seconds = 1000;
+  const convertMilliseconds = () => {
+    const days = 86400000, hours = 3600000, minutes = 60000, seconds = 1000;
     
-    let numDays = 0;
-    let numHours = 0;
-    let numMinutes = 0;
-    let numSeconds = 0;
+    let numDays = 0, numHours = 0, numMinutes = 0, numSeconds = 0;
     
-    if (t > 0) {
-      let numLeft = t;
+    if (elapseTime > 0) {
+      let numLeft = elapseTime;
       if (numLeft > 86400000)
       {
-        numDays = Math.floor(t/days);
+        numDays = Math.floor(numLeft/days);
         numLeft = numLeft - (numDays * days);
       };
       if (numLeft > 3600000) {
@@ -68,13 +69,13 @@ function Home() {
     setDisplayTime([]);
     elapseTime = 0;
   };
-
+  
   console.log(
     "\nlast recorded: " + lastRecorded + 
     "\ncurrent Time:  " + currentTime + 
     "\nelapsed time:  " + elapseTime + 
     "\nDISPLAY        " + displayTime[displayTime.length -1] +
-    "\nconversion " + convertMili(elapseTime)
+    "\nconversion " + convertMilliseconds()
     );
   
   
@@ -91,7 +92,7 @@ function Home() {
           <Button className="warning" color="warning" onClick={recordTime}>
             Log Time Now
           </Button>
-          <p>Time since last log:</p><p> {convertMili(elapseTime)}</p>
+          <p>Time since last log:</p><p> {elapse}</p>
           {/* <p>current time:</p><p> {currentTime.toString()}</p>
           <p>last recorded: </p><p> {lastRecorded.toString()}</p> */}
         </div>
