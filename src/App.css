@@ -65,3 +65,7 @@ body {
 .warning {
   margin: 12px 0px 12px 0px;
 }
+
+.button-board {
+  color: white;
+}
