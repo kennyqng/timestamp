@@ -11,16 +11,18 @@ function Home() {
   });
   
   const [elapse, setElapse] = useState ("");
+  const [colorChange, setColorChange] = useState ("");
   
   useEffect(() => {
     localStorage.setItem("recent", JSON.stringify(displayTime));
     const interval = setInterval(()=> {
       setElapse (convertMilliseconds());
+      setColorChange(colorString());      
     }, 1000);
     return () => clearInterval(interval);
     
   });
-
+  
   var lastRecorded = new Date(displayTime[displayTime.length-1]);
   var currentTime = new Date();
   var elapseTime =  currentTime - lastRecorded;
@@ -35,6 +37,14 @@ function Home() {
   
   const updateCurrentTime = () => {
     currentTime = Date.now();
+  };
+
+  const colorString = () => {
+    let counter = 255;
+    if (elapseTime < 255000) {
+      counter = Math.floor(elapseTime/1000);
+    }
+    return "rgb(" + counter + ", 255, " + counter + ")"
   };
   
   
@@ -76,7 +86,8 @@ function Home() {
   //   "\ncurrent Time:  " + currentTime + 
   //   "\nelapsed time:  " + elapseTime + 
   //   "\nDISPLAY        " + displayTime[displayTime.length -1] +
-  //   "\nconversion " + convertMilliseconds()
+  //   "\nconversion " + convertMilliseconds() +
+  //   "\nColor String: " + colorChange
   //   );
   
   
@@ -89,13 +100,12 @@ function Home() {
         </Collapse>
       </Navbar>
       <div className="welcome">
-        <div className="button-board">
+        <div className="button-board" style={{color:colorChange}}>
           <Button className="warning" color="warning" onClick={recordTime}>
             Log Time Now
           </Button>
-          <p>Time since last log:</p><p> {elapse}</p>
-          {/* <p>current time:</p><p> {currentTime.toString()}</p>
-          <p>last recorded: </p><p> {lastRecorded.toString()}</p> */}
+          <p>Time since last log:</p>
+          <p > {elapse}</p>
         </div>
         {displayTime
           .slice(0)

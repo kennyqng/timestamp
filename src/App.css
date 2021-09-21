@@ -67,5 +67,6 @@ body {
 }
 
 .button-board {
-  color: white;
+  font-size: medium;
+  font-weight: bold;
 }
