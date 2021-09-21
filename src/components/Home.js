@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "reactstrap";
 import { Toast, ToastBody, ToastHeader } from "reactstrap";
-import { Collapse, Navbar, NavbarBrand, Nav, NavbarText } from "reactstrap";
+import { Collapse, Navbar, NavbarBrand, Nav } from "reactstrap";
 
 function Home() {
   const [displayTime, setDisplayTime] = useState(() => {
@@ -27,8 +27,9 @@ function Home() {
   
   const recordTime = () => {
     const newStamp = new Date();
-    setDisplayTime(arr => [...arr, newStamp.toString()]);
+    setDisplayTime(arr => [...arr, newStamp.toLocaleString()]);
     updateCurrentTime();
+    setElapse();
     localStorage.getItem("recent");
   };
   
@@ -70,13 +71,13 @@ function Home() {
     elapseTime = 0;
   };
   
-  console.log(
-    "\nlast recorded: " + lastRecorded + 
-    "\ncurrent Time:  " + currentTime + 
-    "\nelapsed time:  " + elapseTime + 
-    "\nDISPLAY        " + displayTime[displayTime.length -1] +
-    "\nconversion " + convertMilliseconds()
-    );
+  // console.log(
+  //   "\nlast recorded: " + lastRecorded + 
+  //   "\ncurrent Time:  " + currentTime + 
+  //   "\nelapsed time:  " + elapseTime + 
+  //   "\nDISPLAY        " + displayTime[displayTime.length -1] +
+  //   "\nconversion " + convertMilliseconds()
+  //   );
   
   
   return (
