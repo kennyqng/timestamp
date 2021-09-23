@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "reactstrap";
-import { Toast, ToastBody, ToastHeader } from "reactstrap";
-import { Collapse, Navbar, NavbarBrand, Nav } from "reactstrap";
+import { Alert, Button, Toast, ToastBody, ToastHeader, Collapse, Navbar, NavbarBrand, Nav  } from "reactstrap";
 
 function Home() {
 
@@ -13,6 +11,7 @@ function Home() {
   
   const [elapse, setElapse] = useState ("");
   const [colorChange, setColorChange] = useState ("");
+  const [buttonStatus, setButtonStatus] = useState ('"warning" disabled');
   
   useEffect(() => {
     localStorage.setItem("recent", JSON.stringify(displayTime));
@@ -43,11 +42,10 @@ function Home() {
   const colorString = () => {
     let counter = 255;
     if (elapseTime < 255000) {
-      counter = Math.floor(elapseTime/1000);
+      counter =  Math.floor(elapseTime/1000);
     }
-    return "rgb(" + counter + ", 255, " + counter + ")"
+    return "rgb(" + counter + ", 255, 255)"
   };
-  
   
   const convertMilliseconds = () => {
     const days = 86400000, hours = 3600000, minutes = 60000, seconds = 1000;
@@ -77,9 +75,17 @@ function Home() {
   };
 
   const deleteRecent = () => {
-      displayTime.splice(displayTime.length-1);
-      localStorage.setItem("recent", JSON.stringify(displayTime));
-  }
+    localStorage.setItem("deleted", displayTime[displayTime.length-1]);
+    displayTime.splice(displayTime.length-1);
+    localStorage.setItem("recent", JSON.stringify(displayTime));
+    setButtonStatus ('"warning" active');
+  };
+
+  const recoverDeleted = () => {
+    let recover = localStorage.getItem("deleted");
+    setDisplayTime(arr => [...arr, recover]);
+    setButtonStatus ('"warning" disabled');
+  };
   
   
   const clearLog = () => {
@@ -96,24 +102,31 @@ function Home() {
   //   "\nColor String: " + colorChange
   //   );
 
-  console.log("displayTime array: " + displayTime);
+  // console.log("displayTime array: " + displayTime);
+  // console.log("button status: " + buttonStatus);
+
   
   
   return (
     <div>
-      <Navbar className="NavBar" color="light" light expand="md">
-        <NavbarBrand className="Brand" href="/"> Keeping Time</NavbarBrand>
+      <Navbar className="NavBar" color="dark" light expand="md">
+        <NavbarBrand className="text-white" href="/"> Keeping Time</NavbarBrand>
         <Collapse navbar>
           <Nav className="mr-auto" navbar></Nav>
         </Collapse>
       </Navbar>
       <div className="welcome">
         <div className="button-board" style={{color:colorChange}}>
-          <Button className="warning" color="warning" onClick={recordTime}>
+          <Button className="log-button" color="light" onClick={recordTime}>
             Log Time Now
           </Button>
-          <p>Time since last log:</p>
-          <p > {elapse}</p>
+
+          <div>
+    </div>
+          <div className="elapse">
+        <p>Time since last log:</p>
+        <p > {elapse}</p>
+          </div>
         </div>
         {displayTime
           .slice(0)
@@ -126,12 +139,15 @@ function Home() {
               </Toast>
             </p>
           ))}
-        <Button color="danger" className="clear" onClick={clearLog}>
+        <Button className="clear" color="dark" onClick={clearLog}>
           {" "}
           Clear Storage
         </Button>
-          <Button className="warning" color="info" onClick={deleteRecent}>
+          <Button className="warning" color="dark" onClick={deleteRecent}>
             Delete Recent
+          </Button>
+      <Button className={buttonStatus} color="dark" onClick={recoverDeleted}>
+            Recover Recent
           </Button>
       </div>
     </div>

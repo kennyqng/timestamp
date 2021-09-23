@@ -39,7 +39,7 @@
 body {
   height: 812px;
   background-color: rgb(18, 43, 125); /* For browsers that do not support gradients */
-  background-image: radial-gradient(rgb(18, 43, 125), rgb(0, 221, 245));
+  background-image: radial-gradient(rgb(128, 0, 128),  rgb(0, 0, 0));
   font: white;
 }
 .NavBar {
@@ -48,7 +48,6 @@ body {
 .Brand {
   font-family: "Avant Garde", "Avantgarde", "Century Gothic", "CenturyGothic", "AppleGothic", sans-serif;
   font-weight: bold;
-  
 }
 .welcome {
   color: rgb(67, 67, 67);
@@ -65,12 +64,16 @@ body {
 .warning {
   margin: 12px 0px 12px 0px;
 }
+.log-button {
+  margin: 20px 0px 12px 0px;
+}
 
-.button-board {
+.elapse {
   font-size: medium;
   font-weight: bold;
+  margin: 0px 0px 0px 5px;
 }
 
 .warning {
-  margin: 10px;
+  margin: 3px;
 }
