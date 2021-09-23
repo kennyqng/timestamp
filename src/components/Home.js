@@ -4,6 +4,7 @@ import { Toast, ToastBody, ToastHeader } from "reactstrap";
 import { Collapse, Navbar, NavbarBrand, Nav } from "reactstrap";
 
 function Home() {
+
   const [displayTime, setDisplayTime] = useState(() => {
     const saved = localStorage.getItem("recent");
     const initialValue = JSON.parse(saved);
@@ -74,6 +75,11 @@ function Home() {
     };
     return numDays + " days " + numHours + " hours " + numMinutes + " minutes " + numSeconds + " seconds ";
   };
+
+  const deleteRecent = () => {
+      displayTime.splice(displayTime.length-1);
+      localStorage.setItem("recent", JSON.stringify(displayTime));
+  }
   
   
   const clearLog = () => {
@@ -89,6 +95,8 @@ function Home() {
   //   "\nconversion " + convertMilliseconds() +
   //   "\nColor String: " + colorChange
   //   );
+
+  console.log("displayTime array: " + displayTime);
   
   
   return (
@@ -122,6 +130,9 @@ function Home() {
           {" "}
           Clear Storage
         </Button>
+          <Button className="warning" color="info" onClick={deleteRecent}>
+            Delete Recent
+          </Button>
       </div>
     </div>
   );
