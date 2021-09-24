@@ -51,14 +51,16 @@ body {
 }
 .welcome {
   color: rgb(67, 67, 67);
-  padding: 1% 2% 1%;
+  padding: 6px 12px 6px 12px;
 }
 .list {
   height: 400px;
 }
 
 .warning {
-  margin: 12px 0px 12px 0px;
+  font-size: small;
+  color: aqua;
+  /* margin: 12px 0px 12px 0px; */
 }
 .log-button {
   margin: 20px 0px 12px 0px;
@@ -72,4 +74,10 @@ body {
 
 .warning {
   margin: 3px;
+}
+
+.card-wrap {
+  width: 350px;
+  margin: 20px 0px 20px 0px;
+
 }

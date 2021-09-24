@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {
-  Alert,
+  Card,
+  CardTitle,
+  CardText,
   Button,
   Toast,
   ToastBody,
@@ -48,11 +50,12 @@ function Home() {
   };
 
   const colorString = () => {
-    let counter = 255;
+    let counter = 0;
+    let x = 0;
     if (elapseTime < 255000) {
-      counter = Math.floor(elapseTime / 1000);
+      counter = 255 - Math.floor(elapseTime / 1000);
     }
-    return "rgb(" + counter + ", 255, 255)";
+    return "rgb(" + x + ", " + counter + ", " + counter + " )";
   };
 
   const convertMilliseconds = () => {
@@ -110,8 +113,13 @@ function Home() {
   };
 
   const clearLog = () => {
+    localStorage.setItem("backup", JSON.stringify(displayTime));
     setDisplayTime([]);
     elapseTime = 0;
+  };
+  const recoverAll = () => {
+    let backup = localStorage.getItem("backup");
+    setDisplayTime(JSON.parse(backup));
   };
 
   // console.log(
@@ -138,38 +146,43 @@ function Home() {
         </Collapse>
       </Navbar>
       <div className="welcome">
-        <div className="button-board" style={{ color: colorChange }}>
-          <Button className="log-button" color="light" onClick={recordTime}>
-            Log Time Now
-          </Button>
-
-          <div></div>
-          <div className="elapse">
-            <p>Time since last log:</p>
-            <p> {elapse}</p>
-          </div>
+        <div className="card-wrap" style={{ color: colorChange }}>
+          <Card body>
+            <CardTitle tag="h5">Time since last log:</CardTitle>
+            <CardText>{elapse}</CardText>
+            <Button className="log-button" color = "info" onClick={recordTime}>
+              Log Time Now
+            </Button>
+          </Card>
         </div>
-        {displayTime
-          .slice(0)
-          .reverse()
-          .map(e => (
-            <p>
-              <Toast className="">
-                <ToastHeader>STAMPED</ToastHeader>
-                <ToastBody>{e}</ToastBody>
-              </Toast>
-            </p>
-          ))}
-        <Button className="warning" color="dark" onClick={clearLog}>
-          {" "}
-          Clear Storage
-        </Button>
-        <Button className="warning" color="dark" onClick={deleteRecent}>
-          Delete Recent
-        </Button>
-        <Button className={buttonStatus} color="dark" onClick={recoverDeleted}>
-          Recover Recent
-        </Button>
+        <div className="stamped-area">
+          {displayTime
+            .slice(0)
+            .reverse()
+            .map(e => (
+              <p>
+                <Toast className="">
+                  <ToastHeader>STAMPED</ToastHeader>
+                  <ToastBody>{e}</ToastBody>
+                </Toast>
+              </p>
+            ))}
+        </div>
+        <div className="bottom-buttons">
+          <Button className="warning" color="dark" onClick={deleteRecent}>
+            Delete Recent
+          </Button>
+          <Button className={buttonStatus} color="dark" onClick={recoverDeleted}>
+            Undo Delete
+          </Button>
+          <Button className="warning" color="dark" onClick={clearLog}>
+            {" "}
+            Clear All
+          </Button>
+          <Button className="warning" color="dark" onClick={recoverAll}>
+            Recover All
+          </Button>
+        </div>
       </div>
     </div>
   );
