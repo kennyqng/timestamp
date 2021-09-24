@@ -56,28 +56,27 @@ body {
 .list {
   height: 400px;
 }
-
-.warning {
-  font-size: small;
-  color: aqua;
-  /* margin: 12px 0px 12px 0px; */
-}
-.log-button {
+/* .log-button {
   margin: 20px 0px 12px 0px;
-}
+} */
 
-.elapse {
+/* .elapse {
   font-size: medium;
   font-weight: bold;
   margin: 0px 0px 0px 5px;
-}
+} */
 
 .warning {
-  margin: 3px;
+  width: 160px;
+  margin: 0px 7px 0px 7px;
 }
 
 .card-wrap {
   width: 350px;
   margin: 20px 0px 20px 0px;
-
 }
+
+.buttons-recent {
+  /* margin: 5px 10px 5px 10px; */
+  width: 350px;
+  margin: 20px 0px 20px 0px;}

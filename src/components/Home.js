@@ -22,7 +22,7 @@ function Home() {
 
   const [elapse, setElapse] = useState("");
   const [colorChange, setColorChange] = useState("");
-  const [buttonStatus, setButtonStatus] = useState('"warning" disabled');
+  const [buttonStatus, setButtonStatus] = useState('warning disabled');
 
   useEffect(() => {
     localStorage.setItem("recent", JSON.stringify(displayTime));
@@ -103,13 +103,13 @@ function Home() {
     localStorage.setItem("deleted", displayTime[displayTime.length - 1]);
     displayTime.splice(displayTime.length - 1);
     localStorage.setItem("recent", JSON.stringify(displayTime));
-    setButtonStatus('"warning" active');
+    setButtonStatus("warning");
   };
 
   const recoverDeleted = () => {
     let recover = localStorage.getItem("deleted");
     setDisplayTime(arr => [...arr, recover]);
-    setButtonStatus('"warning" disabled');
+    setButtonStatus('warning disabled');
   };
 
   const clearLog = () => {
@@ -155,6 +155,14 @@ function Home() {
             </Button>
           </Card>
         </div>
+        <div className="buttons-recent">
+          <Button className="warning" color="dark" onClick={deleteRecent}>
+            Delete Recent
+          </Button>
+          <Button className={buttonStatus} color="dark" onClick={recoverDeleted}>
+            Undo Delete
+          </Button>
+        </div>
         <div className="stamped-area">
           {displayTime
             .slice(0)
@@ -169,12 +177,6 @@ function Home() {
             ))}
         </div>
         <div className="bottom-buttons">
-          <Button className="warning" color="dark" onClick={deleteRecent}>
-            Delete Recent
-          </Button>
-          <Button className={buttonStatus} color="dark" onClick={recoverDeleted}>
-            Undo Delete
-          </Button>
           <Button className="warning" color="dark" onClick={clearLog}>
             {" "}
             Clear All
